@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Site web de Charlito33</title>
+    </head>
+    <body>
+         <h3>Commande avec un rayon de 5, bloc du dessous: grass 0, bloc à poser: leaves 0 et la hauteur: 2.</h3>
+        <textarea>
+            summon falling_block ~ ~.6 ~ {Block:chain_command_block,TileEntityData:{Command:"fill ~ ~ ~ ~ ~2 ~ air"},Time:1,Passengers:[{id:falling_block,Block:redstone_block,Time:1,Passengers:[{id:falling_block,Block:activator_rail,Time:1,Passengers:[{id:commandblock_minecart,Command:"give @p spawn_egg 1 0 {display:{Name:\"Auto-Bloc: r=5, b=grass 0, h=2, br=leaves 0\"},EntityTag:{id:\"minecraft:bat\",CustomName:AutoBloc,CustomNameVisible:1,NoAI:1b,Silent:1,Tags:[\"AB\"]}}"},{id:commandblock_minecart,Command:"setblock ~1 ~-3 ~ repeating_command_block 1 replace {Command:\"execute @e[type=bat,tag=AB] ~ ~ ~ summon armor_stand ~ ~ ~ {Invisible:true,CustomNameVisible:true,CustomName:\\\"Auto-Bloc: r=5, b=grass 0, h=2, br=leaves 0\\\",Invulnerable:true,Tags:[\\\"AB\\\"]}\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~1 ~-2 ~ chain_command_block 1 replace {Command:\"execute @e[type=bat,tag=AB] ~ ~ ~ summon armor_stand ~ ~ ~ {Invisible:true,Invulnerable:true,Tags:[\\\"ABE\\\"]}\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~1 ~-1 ~ chain_command_block 1 replace {Command:\"kill @e[type=bat,tag=AB]\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~1 ~ ~ chain_command_block 1 replace {Command:\"execute @e[type=armor_stand,tag=AB] ~ ~ ~ particle flame ~ ~ ~ 0 1 0 0 1 1 @a\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~1 ~1 ~ air"},{id:commandblock_minecart,Command:"setblock ~2 ~-3 ~ repeating_command_block 1 replace {Command:\"execute @e[type=armor_stand,tag=ABE] ~ ~ ~ detect ~ ~-1 ~ grass 0 fill ~ ~ ~ ~ ~1 ~ leaves 0\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~2 ~-2 ~ chain_command_block 1 replace {Command:\"execute @e[type=armor_stand,tag=AB] ~ ~ ~ spreadplayers ~ ~ 0 5 false @e[type=armor_stand,tag=ABE]\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~2 ~-1 ~ air"},{id:commandblock_minecart,Command:"setblock ~3 ~-3 ~ repeating_command_block 1 replace {Command:\"execute @e[type=armor_stand,tag=AB] ~ ~2 ~ testfor @e[type=Item,r=1] {Item:{id:\\\"minecraft:coal\\\"}}\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~3 ~-2 ~ chain_command_block 9 replace {Command:\"execute @e[type=armor_stand,tag=AB] ~ ~2 ~ kill @e[type=Item,r=1]\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~3 ~-1 ~ chain_command_block 9 replace {Command:\"execute @e[type=armor_stand,tag=AB] ~ ~2 ~ give @p spawn_egg 1 0 {display:{Name:\\\"Auto-Bloc\\\"},EntityTag:{id:\\\"minecraft:bat\\\",CustomName:AutoFeuillage,CustomNameVisible:1,NoAI:1b,Silent:1,Tags:[\\\"AB\\\"]}}\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~3 ~ ~ chain_command_block 9 replace {Command:\"kill @e[type=armor_stand,tag=ABE]\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~3 ~1 ~ chain_command_block 9 replace {Command:\"kill @e[type=armor_stand,tag=AB]\",auto:1,TrackOutput:0b}"},{id:commandblock_minecart,Command:"setblock ~3 ~2 ~ air"},{id:commandblock_minecart,Command:"blockdata ~ ~-3 ~ {Command:\"\",auto:0}"},{id:commandblock_minecart,Command:"setblock ~ ~-1 ~ command_block 0 1 {auto:1,Command:\"kill @e[type=commandblock_minecart,r=1]\"}"}]}]}]}
+
+        </textarea>
+        <hr />
+        <h3>Pour le commandstudio:</h3>
+        <h5><p><a href="https://commandstudio.github.io/commandstudio/" target="blank_">https://commandstudio.github.io/commandstudio/</a></p></h5>
+        <textarea>
+            var $rayon = 5
+var $block = grass 0
+var $hauteur = 2
+var $blockr = leaves 0
+ 
+ 
+ 
+var $thauteur = ( $hauteur - 1 )
+give @p spawn_egg 1 0 {display:{Name:"Auto-Bloc: r=$rayon, b=$block, h=$hauteur, br=$blockr"},EntityTag:{id:"minecraft:bat",CustomName:AutoBloc,CustomNameVisible:1,NoAI:1b,Silent:1,Tags:["AB"]}}
+ 
+chain ~1 ~ ~:
+  r:execute @e[type=bat,tag=AB] ~ ~ ~ summon armor_stand ~ ~ ~ {Invisible:true,CustomNameVisible:true,CustomName:"Auto-Bloc: r=$rayon, b=$block, h=$hauteur, br=$blockr",Invulnerable:true,Tags:["AB"]}
+  c:execute @e[type=bat,tag=AB] ~ ~ ~ summon armor_stand ~ ~ ~ {Invisible:true,Invulnerable:true,Tags:["ABE"]}
+  c:kill @e[type=bat,tag=AB]
+  c:execute @e[type=armor_stand,tag=AB] ~ ~ ~ particle flame ~ ~ ~ 0 1 0 0 1 1 @a
+ 
+chain ~2 ~ ~:
+  r:execute @e[type=armor_stand,tag=ABE] ~ ~ ~ detect ~ ~-1 ~ $block fill ~ ~ ~ ~ ~$thauteur ~ $blockr
+  c:execute @e[type=armor_stand,tag=AB] ~ ~ ~ spreadplayers ~ ~ 0 $rayon false @e[type=armor_stand,tag=ABE]
+ 
+chain ~3 ~ ~:
+  r:execute @e[type=armor_stand,tag=AB] ~ ~$hauteur ~ testfor @e[type=Item,r=1] {Item:{id:"minecraft:coal"}}
+  ?:execute @e[type=armor_stand,tag=AB] ~ ~$hauteur ~ kill @e[type=Item,r=1]
+  ?:execute @e[type=armor_stand,tag=AB] ~ ~$hauteur ~ give @p spawn_egg 1 0 {display:{Name:"Auto-Bloc"},EntityTag:{id:"minecraft:bat",CustomName:AutoFeuillage,CustomNameVisible:1,NoAI:1b,Silent:1,Tags:["AB"]}}
+  ?:kill @e[type=armor_stand,tag=ABE]
+  ?:kill @e[type=armor_stand,tag=AB]
+        </textarea>
+    </body>
+</html>
